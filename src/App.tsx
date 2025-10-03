@@ -1,7 +1,5 @@
-import './App.scss'
 import { useFieldArray, useForm } from "react-hook-form";
 import { Reorder, useDragControls } from 'framer-motion';
-import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -18,11 +16,15 @@ interface FormData {
 }
 
 export default function App() {
+
+  const dragControls = useDragControls();
+
   const { control, register, handleSubmit } = useForm<FormData>({
     defaultValues: { destinatari: [] },
   });
-  const dragControls = useDragControls();
-  const { fields, append, move, remove, update } = useFieldArray({
+
+
+  const { fields, append, move, remove } = useFieldArray({
     control,
     name: "destinatari",
   });
@@ -40,6 +42,7 @@ export default function App() {
       }
     }
   }
+  
   function handleDelete(id: number) {
     const index = fields.findIndex(f => f.id === id);
     if (index !== -1) {
